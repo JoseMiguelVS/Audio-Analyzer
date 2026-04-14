@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Audio Analyzer con Laplace y EDO</title>
+</head>
+<body>
+    <h2>Subir audio (.wav)</h2>
+
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="audio" required><br><br>
+
+        <label>Selecciona método:</label><br>
+        <input type="radio" name="metodo" value="laplace" checked> Laplace<br>
+        <input type="radio" name="metodo" value="edo"> Ecuación diferencial<br><br>
+
+        <button type="submit">Procesar</button>
+    </form>
+</body>
+</html>
