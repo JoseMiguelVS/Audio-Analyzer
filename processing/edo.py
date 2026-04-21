@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def filtro_edo(rate, data, a=1):
+def filtro_edo(rate, data, a=10):
     dt = 1 / rate
     y = np.zeros(len(data))
 
