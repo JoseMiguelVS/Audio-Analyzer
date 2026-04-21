@@ -4,12 +4,18 @@ from processing.utils import save_wav, read_audio, generar_grafica
 from processing.laplace import aplicar_laplace
 from processing.edo import filtro_edo
 
+from flask import send_from_directory
+
 app = Flask(__name__)
 UPLOAD_FOLDER = 'audio'
 GRAPH_FOLDER = 'static/graphs'
 
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(GRAPH_FOLDER, exist_ok=True)
+
+@app.route('/audio/<path:filename>')
+def audio(filename):
+    return send_from_directory('audio', filename)
 
 @app.route('/')
 def index():
