@@ -1,8 +1,10 @@
 import os
+import matplotlib
+matplotlib.use('Agg')
+
 import numpy as np
 from scipy.io import wavfile
 import matplotlib.pyplot as plt
-
 
 def read_audio(path):
     ext = os.path.splitext(path)[1].lower()
@@ -25,7 +27,14 @@ def read_audio(path):
 
 
 def save_wav(path, rate, data):
-    wavfile.write(path, rate, data.astype(np.int16))
+    # 🔥 evitar división por cero
+    if np.max(np.abs(data)) > 0:
+        data = data / np.max(np.abs(data))
+
+    # 🔥 escalar a int16
+    data = (data * 32767).astype(np.int16)
+
+    wavfile.write(path, rate, data)
 
 
 def generar_grafica(data, path, titulo):
