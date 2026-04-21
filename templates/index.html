@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Audio Analyzer con Laplace y EDO</title>
+    <title>Audio Analyzer Pro</title>
 </head>
 <body>
     <h2>Subir audio (.wav)</h2>
@@ -9,11 +9,30 @@
     <form action="/upload" method="post" enctype="multipart/form-data">
         <input type="file" name="audio" required><br><br>
 
-        <label>Selecciona método:</label><br>
+        <label>Método:</label><br>
         <input type="radio" name="metodo" value="laplace" checked> Laplace<br>
         <input type="radio" name="metodo" value="edo"> Ecuación diferencial<br><br>
 
         <button type="submit">Procesar</button>
     </form>
+
+    {% if input_audio %}
+    <h3>Audio Original</h3>
+    <audio controls>
+        <source src="/{{ input_audio }}" type="audio/wav">
+    </audio>
+
+    <h3>Gráfica Original</h3>
+    <img src="/{{ grafica_input }}" width="500">
+
+    <h3>Audio Filtrado</h3>
+    <audio controls>
+        <source src="/{{ output_audio }}" type="audio/wav">
+    </audio>
+
+    <h3>Gráfica Filtrada</h3>
+    <img src="/{{ grafica_output }}" width="500">
+    {% endif %}
+
 </body>
 </html>
