@@ -7,6 +7,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# music
+.wav
+.mp3
+
 # C extensions
 *.so
 

@@ -1,0 +1,115 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* FONDO */
+body {
+    background: linear-gradient(135deg, #1e1e2f, #2c2c54);
+    color: #fff;
+    padding: 30px;
+    text-align: center;
+}
+
+/* CONTENEDOR */
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #2f2f4f;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+}
+
+/* TITULOS */
+h2 {
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+h3 {
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+/* FORM */
+form {
+    margin-bottom: 20px;
+}
+
+/* INPUT FILE */
+input[type="file"] {
+    background: #444;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+}
+
+/* SLIDER */
+input[type="range"] {
+    width: 60%;
+    margin-top: 10px;
+}
+
+/* OUTPUT DEL SLIDER */
+output {
+    font-size: 18px;
+    margin-left: 10px;
+    font-weight: bold;
+    color: #00d4ff;
+}
+
+/* BOTÓN */
+button {
+    margin-top: 15px;
+    padding: 10px 25px;
+    background: #00d4ff;
+    border: none;
+    border-radius: 8px;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00aacc;
+    transform: scale(1.05);
+}
+
+/* AUDIO */
+audio {
+    margin-top: 10px;
+    width: 80%;
+}
+
+/* IMÁGENES (GRÁFICAS) */
+img {
+    margin-top: 10px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    max-width: 100%;
+}
+
+/* SECCIONES */
+.section {
+    margin-top: 20px;
+    padding: 15px;
+    background: #3a3a6a;
+    border-radius: 10px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    input[type="range"] {
+        width: 100%;
+    }
+
+    audio {
+        width: 100%;
+    }
+}
