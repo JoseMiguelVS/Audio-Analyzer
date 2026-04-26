@@ -1,14 +1,12 @@
 import numpy as np
 
-def filtro_edo(rate, data, a):
+def filtro_edo(rate, data, a=50):
     dt = 1 / rate
     y = np.zeros(len(data))
-
-    # hacer más fuerte el efecto del slider
-    alpha = a * 5  # multiplica el impacto
+    y[0] = data[0]
 
     for i in range(1, len(data)):
-        y[i] = y[i-1] + dt * (data[i] - alpha * y[i-1])
+        y[i] = y[i-1] + dt * (data[i] - a * y[i-1])
 
     return y
 
