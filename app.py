@@ -26,34 +26,26 @@ def index():
 @app.route('/upload', methods=['POST'])
 def upload():
     file = request.files['audio']
-    nivel_filtro = float(request.form.get('nivel_filtro', 5))
+    metodo = request.form.get('metodo')
 
-    #  limitar valores
-    nivel_filtro = max(0.5, min(nivel_filtro, 10))
+    a_slider = float(request.form.get('a', 50))
+    a_slider = max(0, min(a_slider, 100))
+    a = 50 - (a_slider / 100) * 50
 
-    #  guardar con extensión real
     filename = file.filename
     input_path = os.path.join(UPLOAD_FOLDER, filename)
     output_path = os.path.join(UPLOAD_FOLDER, 'output.wav')
 
     file.save(input_path)
 
-    #  leer audio (mp3 o wav)
     rate, data = read_audio(input_path)
 
-    #  1. filtro de voz (frecuencias)
-    # data_filtrada = filtro_voz(data, rate)
+    if metodo == 'ecuacion_diferencial':
+        filtered = filtro_edo(rate, data, a=a)
+        filtered_euler = filtro_euler_mejorado(rate, data, a=a)
 
-    #  2. EDO (Euler básico)
-    filtered_edo = filtro_edo(rate, data, a=nivel_filtro)
+    save_wav(output_path, rate, filtered)
 
-    #  3. Euler mejorado (comparación)
-    filtered_euler = filtro_euler_mejorado(rate, data, a=nivel_filtro)
-
-    #  4. guardar salida
-    save_wav(output_path, rate, filtered_edo)
-
-    #  gráficas
     grafica_input = os.path.join(GRAPH_FOLDER, 'input.png')
     grafica_output = os.path.join(GRAPH_FOLDER, 'output.png')
     grafica_comparacion = os.path.join(GRAPH_FOLDER, 'comparacion.png')
@@ -61,10 +53,12 @@ def upload():
     grafica_spec_output = os.path.join(GRAPH_FOLDER, 'spec_output.png')
 
     generar_espectrograma(data, rate, grafica_spec_input, 'Espectrograma Original')
-    generar_espectrograma(filtered_edo, rate, grafica_spec_output, 'Espectrograma Filtrado')
+    generar_espectrograma(filtered, rate, grafica_spec_output, 'Espectrograma Filtrado')
     generar_grafica(data, grafica_input, 'Señal Original')
-    generar_grafica(filtered_edo, grafica_output, 'Señal Filtrada (EDO)')
-    generar_grafica_comparacion(filtered_edo, filtered_euler, grafica_comparacion)
+    generar_grafica(filtered, grafica_output, 'Señal Filtrada')
+
+    if metodo != 'laplace':
+        generar_grafica_comparacion(filtered, filtered_euler, grafica_comparacion)
 
     return render_template(
         'index.html',
@@ -77,20 +71,6 @@ def upload():
         grafica_spec_output='graphs/spec_output.png'
     )
 
-
-# función para comparar métodos
-def generar_grafica_comparacion(edo, euler, path):
-    plt.figure()
-    plt.plot(edo, label='EDO (Euler básico)')
-    plt.plot(euler, label='Euler mejorado', linestyle='--')
-    plt.legend()
-    plt.title('Comparación de Métodos')
-    plt.xlabel('Tiempo')
-    plt.ylabel('Amplitud')
-
-    plt.savefig(path)
-    plt.close()
-    
     
 @app.route('/audio/<path:filename>')
 def audio(filename):
