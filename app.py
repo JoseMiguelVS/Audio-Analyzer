@@ -31,7 +31,7 @@ def upload():
     a = 50 - (a_slider / 100) * 50
 
     filename = file.filename
-    input_path = os.path.join(UPLOAD_FOLDER, filename)
+    input_path = os.path.join(UPLOAD_FOLDER, 'input.wav')
     output_path = os.path.join(UPLOAD_FOLDER, 'output.wav')
 
     file.save(input_path)
