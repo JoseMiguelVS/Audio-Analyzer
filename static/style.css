@@ -25,6 +25,12 @@ body {
 }
 
 /* TITULOS */
+
+h1 {
+    margin-bottom: 30px;
+    font-size: 36px;
+}
+
 h2 {
     margin-bottom: 20px;
     font-size: 28px;
