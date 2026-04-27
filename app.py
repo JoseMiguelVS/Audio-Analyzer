@@ -4,10 +4,8 @@ matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 
 from flask import Flask, render_template, request, send_from_directory
-from processing.utils import read_audio, save_wav, generar_grafica
+from processing.utils import read_audio, save_wav, generar_grafica, generar_espectrograma, generar_grafica_comparacion
 from processing.edo import filtro_edo, filtro_euler_mejorado
-# from processing.filters import filtro_voz
-from processing.utils import generar_espectrograma
 
 app = Flask(__name__)
 
@@ -40,9 +38,8 @@ def upload():
 
     rate, data = read_audio(input_path)
 
-    if metodo == 'ecuacion_diferencial':
-        filtered = filtro_edo(rate, data, a=a)
-        filtered_euler = filtro_euler_mejorado(rate, data, a=a)
+    filtered = filtro_edo(rate, data, a=a)
+    filtered_euler = filtro_euler_mejorado(rate, data, a=a)
 
     save_wav(output_path, rate, filtered)
 
@@ -57,8 +54,7 @@ def upload():
     generar_grafica(data, grafica_input, 'Señal Original')
     generar_grafica(filtered, grafica_output, 'Señal Filtrada')
 
-    if metodo != 'laplace':
-        generar_grafica_comparacion(filtered, filtered_euler, grafica_comparacion)
+    generar_grafica_comparacion(filtered, filtered_euler, grafica_comparacion)
 
     return render_template(
         'index.html',
